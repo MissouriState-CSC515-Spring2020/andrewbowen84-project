@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Navigation from './navigation';
 import { BrowserRouter } from 'react-router-dom';
 import {Route} from 'react-router-dom';
-import Landing from './landing';
-import Categories from './categories';
-import Details from './details';
-
+const Landing = lazy (() => import('./landing'));
+const Categories = lazy(() => import('./categories'));
+const Details = lazy(() => import('./details'));
 function App(){
+
     return(
-        <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
+            <BrowserRouter>
             <div className='overlay'>
                 <Navigation/>
                 <Route exact path="/" component={Landing}/>
@@ -19,5 +20,7 @@ function App(){
             </div>
 
         </BrowserRouter>
+        </Suspense>
+        
     );
 } export default App;
